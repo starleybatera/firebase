@@ -17,7 +17,7 @@ function criarCard() {
     //  adicionaCardATela(card);
     // });
     ref.push().then(snapshot =>{
-        // adicionaCardATela(card, snapshot.key);
+        adicionaCardATela(card, snapshot.key);
        });
 };
 
@@ -87,7 +87,7 @@ function descurtir(id) {
  * Espera o evento de que a DOM está pronta para executar algo
  */
 document.addEventListener("DOMContentLoaded", function () {
-    ref.once('value').then(snapshot =>{
+    //ref.once('value').then(snapshot =>{
     //     // //console.log(snapshot.val());
 
     //     // // acessa um nó filho
@@ -111,12 +111,12 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
 
-        snapshot.forEach(value =>{
-            // // a chave dos valores do snapshot
-            // console.log('chave', value.key);
-         adicionaCardATela(value.val(), value.key);
-        });
-    });
+    //     snapshot.forEach(value =>{
+    //         // // a chave dos valores do snapshot
+    //         // console.log('chave', value.key);
+    //      adicionaCardATela(value.val(), value.key);
+    //     });
+    // });
 
 
     // ref.on('value', snapshot =>{
@@ -136,6 +136,52 @@ document.addEventListener("DOMContentLoaded", function () {
 //    ref.on('child_removed', snapshot =>{
 //         console.log('removed', snapshot.key);
 //    });
+
+/**
+ * ORDENAÇÃO 
+ * orderByChild('filho'): Ordena pela propriedade filho passado como parametro
+ */
+
+//  ref.orderByChild('idade').on('child_added', snapshot =>{
+//      adicionaCardATela(snapshot.val(), snapshot.key);
+//  });
+
+/**
+ * ORDENAÇÃO 
+ * orderByKey(): Ordena pela propriedade key dos nós
+ */
+//  ref.orderByKey().on('child_added', snapshot =>{
+//     adicionaCardATela(snapshot.val(), snapshot.key);
+// });
+
+/**
+ * ORDENAÇÃO 
+ * orderByValue(): Ordena pelo valor de cada propriedade dentro do nó, não vale para nós
+ * que tenham como filho outros nós. !! É possível utilizar apenas um método de ordenação
+ * por vez !!
+ */
+// ref.child('Daniela').orderByValue().on('child_added', snapshot =>{
+//     console.log('o valor da chave ' + snapshot.key + ' é '+ snapshot.val());
+// });
+
+/**
+ * FILTRO 
+ * .startAt(): Traz valores cujo valor passado na query comece no valor da propriedade selecionada
+ * .endAt(): Traz valores cujo valor passado na query vá até o valor da propriedade selecionada
+ */
+// ref.orderByChild('idade').startAt(25).endAt(35).on('child_added', snapshot =>{
+//     adicionaCardATela(snapshot.val(), snapshot.key);
+// });
+
+/**
+ * FILTRO 
+ * .equalTo(): Traz valores cujo valor passado na query bata exatamente com o valor da propriedade selecionada  
+ */
+ref.orderByChild('idade').equalTo(31).on('child_added', snapshot =>{
+    adicionaCardATela(snapshot.val(), snapshot.key);
+});
+
+
 });
 
 /**
